@@ -11,19 +11,11 @@
     <div id="tela-entrada" class="tela ativa">
         <div class="container">
             <h1>🎭 Jogo do Impostor</h1>
-            <p class="subtitulo">Entre com seu nome para participar</p>
+            <p class="subtitulo" id="subtitulo-entrada">Entre com seu nome para participar</p>
             
             <div class="form-grupo-central">
                 <input type="text" id="input-nome-jogador" placeholder="Seu nome" maxlength="20">
                 <button id="btn-entrar" class="btn btn-primario btn-grande">Entrar no Jogo</button>
-            </div>
-
-            <div class="info-sala">
-                <p>Compartilhe este link com os outros jogadores</p>
-                <div class="link-sala">
-                    <input type="text" id="link-sala" readonly>
-                    <button id="btn-copiar" class="btn btn-secundario">Copiar</button>
-                </div>
             </div>
         </div>
     </div>
@@ -52,12 +44,24 @@
             <h2>👑 Painel do Líder</h2>
             <p class="subtitulo">Gerencie a partida</p>
             
+            <div class="info-sala">
+                <p><strong>Compartilhe este link com os jogadores:</strong></p>
+                <div class="link-sala">
+                    <input type="text" id="link-sala" readonly>
+                    <button id="btn-copiar" class="btn btn-secundario">Copiar</button>
+                </div>
+            </div>
+            
             <div class="lista-jogadores">
                 <h3>Jogadores (<span id="contador-jogadores">0</span>)</h3>
                 <ul id="lista-jogadores"></ul>
             </div>
 
             <button id="btn-iniciar" class="btn btn-sucesso" disabled>Iniciar Partida</button>
+            
+            <div class="acoes-lider">
+                <button id="btn-limpar-sala" class="btn btn-secundario">Limpar Sala</button>
+            </div>
         </div>
     </div>
 

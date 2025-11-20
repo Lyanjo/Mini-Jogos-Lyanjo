@@ -33,6 +33,7 @@ let canalBroadcast = null;
 const telaEntrada = document.getElementById('tela-entrada');
 const inputNomeJogador = document.getElementById('input-nome-jogador');
 const btnEntrar = document.getElementById('btn-entrar');
+const subtituloEntrada = document.getElementById('subtitulo-entrada');
 const linkSala = document.getElementById('link-sala');
 const btnCopiar = document.getElementById('btn-copiar');
 
@@ -47,6 +48,7 @@ const telaLider = document.getElementById('tela-lider');
 const listaJogadores = document.getElementById('lista-jogadores');
 const contadorJogadores = document.getElementById('contador-jogadores');
 const btnIniciar = document.getElementById('btn-iniciar');
+const btnLimparSala = document.getElementById('btn-limpar-sala');
 
 // Elementos DOM - Tela Jogo
 const telaJogo = document.getElementById('tela-jogo');
@@ -149,42 +151,50 @@ function entrarNoJogo() {
     
     // Verificar se o nome já existe
     if (sala.jogadores.includes(nome)) {
-        alert('Este nome já está em uso! Escolha outro.');
-        return;
-    }
-    
-    // Adicionar jogador
-    meuNome = nome;
-    sala.jogadores.push(nome);
-    
-    // Inicializar pontuação
-    if (!sala.pontuacoes[nome]) {
-        sala.pontuacoes[nome] = 0;
-    }
-    
-    // Definir líder (primeiro jogador)
-    if (!sala.lider) {
-        sala.lider = nome;
-        ehLider = true;
+        // Permitir reconexão do mesmo jogador (não adicionar duplicado)
+        meuNome = nome;
         
-        // Se for o líder e não tiver código de sala na URL, gerar um novo
-        if (!codigoSala) {
-            codigoSala = gerarCodigoSala();
-            sala.codigoSala = codigoSala;
-            SALA_ID = 'jogo-impostor-sala-' + codigoSala;
-            
-            // Atualizar URL com código da sala
-            const novaURL = window.location.origin + window.location.pathname + '?sala=' + codigoSala;
-            window.history.pushState({}, '', novaURL);
-            linkSala.value = novaURL;
+        // Verificar se é o líder
+        if (sala.lider === nome) {
+            ehLider = true;
         }
+    } else {
+        // Adicionar novo jogador
+        meuNome = nome;
+        sala.jogadores.push(nome);
+        
+        // Inicializar pontuação
+        if (!sala.pontuacoes[nome]) {
+            sala.pontuacoes[nome] = 0;
+        }
+        
+        // Definir líder (primeiro jogador)
+        if (!sala.lider) {
+            sala.lider = nome;
+            ehLider = true;
+            
+            // Se for o líder e não tiver código de sala na URL, gerar um novo
+            if (!codigoSala) {
+                codigoSala = gerarCodigoSala();
+                sala.codigoSala = codigoSala;
+                SALA_ID = 'jogo-impostor-sala-' + codigoSala;
+                
+                // Atualizar URL com código da sala
+                const novaURL = window.location.origin + window.location.pathname + '?sala=' + codigoSala;
+                window.history.pushState({}, '', novaURL);
+            }
+        }
+        
+        sala.timestamp = Date.now();
+        salvarDadosSala(sala);
     }
-    
-    sala.timestamp = Date.now();
-    salvarDadosSala(sala);
     
     // Ir para tela apropriada
     if (ehLider) {
+        // Atualizar link da sala com o nome do líder
+        const urlSala = window.location.origin + window.location.pathname + '?sala=' + codigoSala;
+        linkSala.value = urlSala;
+        
         trocarTela(telaEntrada, telaLider);
         atualizarListaJogadoresLider();
     } else {
@@ -390,6 +400,29 @@ function reiniciarJogo() {
     }
 }
 
+// Limpar sala (apenas líder)
+function limparSala() {
+    if (!ehLider) return;
+    
+    if (confirm('Deseja limpar a sala? Todos os jogadores serão removidos e você poderá começar novamente.')) {
+        const sala = obterDadosSala();
+        if (!sala) return;
+        
+        // Manter apenas o líder
+        sala.jogadores = [sala.lider];
+        
+        // Resetar estado
+        sala.estado = 'entrada';
+        sala.palavraAtual = null;
+        sala.impostorAtual = null;
+        sala.resultadoAtual = null;
+        sala.timestamp = Date.now();
+        
+        salvarDadosSala(sala);
+        atualizarListaJogadoresLider();
+    }
+}
+
 // Sincronização automática
 let intervalSync = null;
 
@@ -496,6 +529,7 @@ btnPontuarImpostor.addEventListener('click', pontuarImpostor);
 btnNovaRodada.addEventListener('click', novaRodada);
 btnReiniciar.addEventListener('click', reiniciarJogo);
 btnCopiar.addEventListener('click', copiarLink);
+btnLimparSala.addEventListener('click', limparSala);
 
 // Inicialização
 document.addEventListener('DOMContentLoaded', () => {
@@ -506,10 +540,17 @@ document.addEventListener('DOMContentLoaded', () => {
         // Entrar em uma sala existente
         codigoSala = codigoDaURL;
         SALA_ID = 'jogo-impostor-sala-' + codigoSala;
-        linkSala.value = window.location.href;
+        
+        // Verificar se a sala existe e pegar o nome do líder
+        const sala = obterDadosSala();
+        if (sala && sala.lider) {
+            subtituloEntrada.textContent = `Entrando no jogo de ${sala.lider}`;
+        } else {
+            subtituloEntrada.textContent = 'Entre com seu nome para participar';
+        }
     } else {
         // Criar nova sala (será definido quando o líder entrar)
-        linkSala.value = 'Aguardando criação da sala...';
+        subtituloEntrada.textContent = 'Entre com seu nome para criar uma sala';
     }
     
     // Focar no input
