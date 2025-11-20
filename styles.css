@@ -337,7 +337,8 @@ input[type="text"]:focus {
     max-width: 200px;
     width: 100%;
     height: auto;
-    margin-bottom: 20px;
+    margin: 0 auto 20px;
+    display: block;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(239, 68, 68, 0.3);
 }
@@ -550,4 +551,94 @@ tbody tr:hover {
 
 .escondido {
     display: none !important;
+}
+
+/* Tela de Embate */
+.tela-embate {
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.embate-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 30px;
+    margin: 40px 0;
+    animation: fadeIn 0.8s ease;
+}
+
+.embate-lado {
+    flex: 1;
+    text-align: center;
+    padding: 20px;
+    border-radius: 15px;
+    transition: transform 0.3s;
+}
+
+.embate-lado:hover {
+    transform: scale(1.05);
+}
+
+.embate-impostor {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(220, 38, 38, 0.1));
+    border: 3px solid var(--cor-perigo);
+}
+
+.embate-verdadeiro {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.1));
+    border: 3px solid var(--cor-sucesso);
+}
+
+.embate-imagem {
+    max-width: 250px;
+    width: 100%;
+    height: auto;
+    margin: 0 auto 20px;
+    display: block;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.embate-titulo {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.embate-impostor .embate-titulo {
+    color: var(--cor-perigo);
+}
+
+.embate-verdadeiro .embate-titulo {
+    color: var(--cor-sucesso);
+}
+
+.vs-text {
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--cor-primaria);
+    text-shadow: 0 0 20px rgba(99, 102, 241, 0.5);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+.embate-texto {
+    color: var(--cor-texto-claro);
+    margin-top: 10px;
+    font-size: 1.1rem;
 }

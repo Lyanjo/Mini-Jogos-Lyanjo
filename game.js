@@ -43,6 +43,10 @@ const btnProximo = document.getElementById('btn-proximo');
 const progressoAtual = document.getElementById('progresso-atual');
 const progressoTotal = document.getElementById('progresso-total');
 
+// Elementos DOM - Tela Embate
+const telaEmbate = document.getElementById('tela-embate');
+const btnIrPontuacao = document.getElementById('btn-ir-pontuacao');
+
 // Elementos DOM - Tela Pontuação
 const telaPontuacao = document.getElementById('tela-pontuacao');
 const nomeImpostor = document.getElementById('nome-impostor');
@@ -188,10 +192,15 @@ function proximoJogador() {
         // Ainda há jogadores para ver a palavra
         prepararRevelacao();
     } else {
-        // Todos viram, ir para tela de pontuação
-        trocarTela(telaRevelacao, telaPontuacao);
-        configurarTelaPontuacao();
+        // Todos viram, ir para tela de embate
+        trocarTela(telaRevelacao, telaEmbate);
     }
+}
+
+// Ir para pontuação (após embate)
+function irParaPontuacao() {
+    trocarTela(telaEmbate, telaPontuacao);
+    configurarTelaPontuacao();
 }
 
 // Configurar tela de pontuação
@@ -272,6 +281,7 @@ inputNomeJogador.addEventListener('keypress', (e) => {
 btnIniciar.addEventListener('click', iniciarPartida);
 btnRevelar.addEventListener('click', revelarPalavra);
 btnProximo.addEventListener('click', proximoJogador);
+btnIrPontuacao.addEventListener('click', irParaPontuacao);
 btnPontuarVerdadeiros.addEventListener('click', pontuarVerdadeiros);
 btnPontuarImpostor.addEventListener('click', pontuarImpostor);
 btnNovaRodada.addEventListener('click', novaRodada);
