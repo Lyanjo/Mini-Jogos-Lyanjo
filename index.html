@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo do Impostor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Tela Inicial - Entrada do Jogador -->
+    <div id="tela-entrada" class="tela ativa">
+        <div class="container">
+            <h1>🎭 Jogo do Impostor</h1>
+            <p class="subtitulo">Entre com seu nome para participar</p>
+            
+            <div class="form-grupo-central">
+                <input type="text" id="input-nome-jogador" placeholder="Seu nome" maxlength="20">
+                <button id="btn-entrar" class="btn btn-primario btn-grande">Entrar no Jogo</button>
+            </div>
+
+            <div class="info-sala">
+                <p>Compartilhe este link com os outros jogadores</p>
+                <div class="link-sala">
+                    <input type="text" id="link-sala" readonly>
+                    <button id="btn-copiar" class="btn btn-secundario">Copiar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela de Espera (para jogadores) -->
+    <div id="tela-espera" class="tela">
+        <div class="container">
+            <h2>Bem-vindo, <span id="nome-usuario"></span>!</h2>
+            <p class="subtitulo">Aguardando o líder iniciar a partida...</p>
+            
+            <div class="lista-jogadores">
+                <h3>Jogadores na sala (<span id="contador-jogadores-espera">0</span>)</h3>
+                <ul id="lista-jogadores-espera"></ul>
+            </div>
+
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Esperando...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela do Líder -->
+    <div id="tela-lider" class="tela">
+        <div class="container">
+            <h2>👑 Painel do Líder</h2>
+            <p class="subtitulo">Gerencie a partida</p>
+            
+            <div class="lista-jogadores">
+                <h3>Jogadores (<span id="contador-jogadores">0</span>)</h3>
+                <ul id="lista-jogadores"></ul>
+            </div>
+
+            <button id="btn-iniciar" class="btn btn-sucesso" disabled>Iniciar Partida</button>
+        </div>
+    </div>
+
+    <!-- Tela do Jogo - Revelação de Papéis -->
+    <div id="tela-jogo" class="tela">
+        <div class="container">
+            <h2>Sua Palavra</h2>
+            
+            <div id="card-palavra" class="card-palavra">
+                <div class="palavra-conteudo">
+                    <div id="area-impostor" class="area-impostor escondido">
+                        <img src="Recursos/Impostor.png" alt="Impostor" class="img-impostor">
+                        <h2 class="texto-impostor">🎭 VOCÊ É O IMPOSTOR</h2>
+                    </div>
+                    
+                    <div id="area-palavra" class="area-palavra escondido">
+                        <p id="texto-papel">Sua palavra é:</p>
+                        <h2 id="palavra-revelada"></h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="instrucoes-jogo">
+                <p>📱 Não mostre sua tela para os outros!</p>
+                <p>🗣️ Discutam presencialmente para descobrir o impostor</p>
+            </div>
+
+            <button id="btn-pronto" class="btn btn-sucesso">Estou Pronto!</button>
+        </div>
+    </div>
+
+    <!-- Tela de Pontuação (Apenas para o Líder) -->
+    <div id="tela-pontuacao" class="tela">
+        <div class="container">
+            <h2>🏆 Sistema de Pontuação</h2>
+            
+            <div class="info-partida">
+                <p><strong>Impostor:</strong> <span id="nome-impostor"></span></p>
+                <p><strong>Palavra:</strong> <span id="palavra-partida"></span></p>
+            </div>
+
+            <div class="opcoes-pontuacao">
+                <button id="btn-pontuar-verdadeiros" class="btn btn-sucesso btn-grande">
+                    ✅ Jogadores Verdadeiros Venceram
+                </button>
+                <button id="btn-pontuar-impostor" class="btn btn-perigo btn-grande">
+                    🎭 Impostor Venceu
+                </button>
+            </div>
+
+            <div class="placar">
+                <h3>Placar Geral</h3>
+                <table id="tabela-placar">
+                    <thead>
+                        <tr>
+                            <th>Jogador</th>
+                            <th>Pontos</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpo-placar"></tbody>
+                </table>
+            </div>
+
+            <div class="acoes-finais">
+                <button id="btn-nova-rodada" class="btn btn-primario">Nova Rodada</button>
+                <button id="btn-reiniciar" class="btn btn-secundario">Reiniciar Jogo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela de Aguardando Pontuação (para jogadores) -->
+    <div id="tela-aguardando" class="tela">
+        <div class="container">
+            <h2>Aguardando Resultado</h2>
+            <p class="subtitulo">O líder está registrando a pontuação...</p>
+            
+            <div class="loading">
+                <div class="spinner"></div>
+            </div>
+
+            <div id="resultado-rodada" class="resultado-rodada escondido">
+                <h3 id="texto-resultado"></h3>
+                <p class="aguardando-proxima">Aguardando próxima rodada...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
