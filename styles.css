@@ -553,7 +553,151 @@ tbody tr:hover {
     display: none !important;
 }
 
-/* Tela de Embate */
+/* Tela de Sorteio/Roleta */
+.tela-embate {
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.roleta-container {
+    margin: 40px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.roleta-display {
+    background: linear-gradient(135deg, var(--cor-fundo), var(--cor-fundo-claro));
+    border: 5px solid var(--cor-primaria);
+    border-radius: 20px;
+    padding: 60px 80px;
+    box-shadow: 0 20px 60px rgba(99, 102, 241, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.roleta-display::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(99, 102, 241, 0.1),
+        transparent
+    );
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.roleta-nome {
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--cor-primaria);
+    text-align: center;
+    min-width: 300px;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+}
+
+.roleta-nome.girando {
+    animation: roletaGira 0.1s infinite;
+}
+
+@keyframes roletaGira {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+.roleta-seta {
+    font-size: 3rem;
+    text-align: center;
+    margin-top: 20px;
+    color: var(--cor-secundaria);
+    position: relative;
+    z-index: 1;
+}
+
+.roleta-seta.girando {
+    animation: girarSeta 1s linear infinite;
+}
+
+@keyframes girarSeta {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.resultado-sorteio {
+    margin-top: 40px;
+    animation: fadeIn 0.5s ease;
+}
+
+.resultado-card {
+    background: var(--cor-fundo);
+    border: 3px solid var(--cor-primaria);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.resultado-card h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--cor-primaria);
+}
+
+.resultado-info {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.resultado-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: var(--cor-fundo-claro);
+    border-radius: 10px;
+}
+
+.resultado-label {
+    font-size: 1.2rem;
+    color: var(--cor-texto-claro);
+}
+
+.resultado-valor {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--cor-primaria);
+}
+
+/* Tela de Embate - Removido, mantido apenas para compatibilidade */
 .tela-embate {
     min-height: 400px;
     display: flex;
@@ -642,3 +786,281 @@ tbody tr:hover {
     margin-top: 10px;
     font-size: 1.1rem;
 }
+
+/* Tela de Pódio */
+.titulo-podio {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: brilhoPodio 2s infinite;
+}
+
+@keyframes brilhoPodio {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+.podio-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 20px;
+    margin: 50px 0;
+    padding: 0 20px;
+}
+
+.posicao-podio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: slideUp 0.8s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.primeiro-lugar {
+    animation-delay: 0.3s;
+    animation-fill-mode: backwards;
+}
+
+.segundo-lugar {
+    animation-delay: 0.1s;
+    animation-fill-mode: backwards;
+}
+
+.terceiro-lugar {
+    animation-delay: 0.2s;
+    animation-fill-mode: backwards;
+}
+
+.trofeu {
+    font-size: 5rem;
+    margin-bottom: 15px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.primeiro-lugar .trofeu {
+    font-size: 6rem;
+    filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6));
+}
+
+.pedestal {
+    background: linear-gradient(135deg, var(--cor-fundo-claro), var(--cor-fundo));
+    border-radius: 15px;
+    padding: 25px 35px;
+    min-width: 180px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.pedestal:hover {
+    transform: translateY(-5px);
+}
+
+.pedestal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+}
+
+.primeiro::before {
+    background: linear-gradient(90deg, #FFD700, #FFA500);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+}
+
+.segundo::before {
+    background: linear-gradient(90deg, #C0C0C0, #A8A8A8);
+    box-shadow: 0 0 15px rgba(192, 192, 192, 0.6);
+}
+
+.terceiro::before {
+    background: linear-gradient(90deg, #CD7F32, #B8860B);
+    box-shadow: 0 0 15px rgba(205, 127, 50, 0.6);
+}
+
+.primeiro {
+    border: 3px solid #FFD700;
+    min-height: 220px;
+}
+
+.segundo {
+    border: 3px solid #C0C0C0;
+    min-height: 180px;
+}
+
+.terceiro {
+    border: 3px solid #CD7F32;
+    min-height: 150px;
+}
+
+.numero-posicao {
+    font-size: 1.5rem;
+    font-weight: 900;
+    margin-bottom: 10px;
+    opacity: 0.7;
+}
+
+.nome-vencedor {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+}
+
+.primeiro .nome-vencedor {
+    font-size: 2rem;
+    color: #FFD700;
+}
+
+.segundo .nome-vencedor {
+    color: #C0C0C0;
+}
+
+.terceiro .nome-vencedor {
+    color: #CD7F32;
+}
+
+.pontos-vencedor {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--cor-primaria);
+    padding: 8px 15px;
+    background: var(--cor-fundo);
+    border-radius: 20px;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.outros-jogadores {
+    margin: 40px auto;
+    max-width: 600px;
+}
+
+.outros-jogadores h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--cor-texto-claro);
+}
+
+.jogador-ranking {
+    background: var(--cor-fundo-claro);
+    border-left: 4px solid var(--cor-primaria);
+    padding: 15px 20px;
+    margin: 10px 0;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: fadeIn 0.5s ease;
+}
+
+.jogador-ranking-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.posicao-numero {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--cor-primaria);
+    min-width: 40px;
+}
+
+.jogador-ranking-nome {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.jogador-ranking-pontos {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--cor-secundaria);
+}
+
+/* Responsividade para Pódio */
+@media (max-width: 768px) {
+    .titulo-podio {
+        font-size: 1.8rem;
+    }
+
+    .podio-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .posicao-podio {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .primeiro-lugar {
+        order: 1;
+    }
+
+    .segundo-lugar {
+        order: 2;
+    }
+
+    .terceiro-lugar {
+        order: 3;
+    }
+
+    .trofeu {
+        font-size: 4rem;
+    }
+
+    .primeiro-lugar .trofeu {
+        font-size: 5rem;
+    }
+
+    .pedestal {
+        min-width: 100%;
+        min-height: auto !important;
+    }
+}
+
+.btn-destaque {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    color: #000;
+    font-weight: 700;
+}
+
+.btn-destaque:hover {
+    background: linear-gradient(135deg, #FFA500, #FFD700);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.4);
+}
+

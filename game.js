@@ -45,6 +45,12 @@ const progressoTotal = document.getElementById('progresso-total');
 
 // Elementos DOM - Tela Embate
 const telaEmbate = document.getElementById('tela-embate');
+const btnSortear = document.getElementById('btn-sortear');
+const roletaNome = document.getElementById('roleta-nome');
+const roletaSeta = document.getElementById('roleta-seta');
+const resultadoSorteio = document.getElementById('resultado-sorteio');
+const primeiroJogadorSpan = document.getElementById('primeiro-jogador');
+const sentidoRodadaSpan = document.getElementById('sentido-rodada');
 const btnIrPontuacao = document.getElementById('btn-ir-pontuacao');
 
 // Elementos DOM - Tela Pontuação
@@ -55,7 +61,18 @@ const btnPontuarVerdadeiros = document.getElementById('btn-pontuar-verdadeiros')
 const btnPontuarImpostor = document.getElementById('btn-pontuar-impostor');
 const corpoPlacar = document.getElementById('corpo-placar');
 const btnNovaRodada = document.getElementById('btn-nova-rodada');
-const btnReiniciar = document.getElementById('btn-reiniciar');
+const btnTerminarJogo = document.getElementById('btn-terminar-jogo');
+
+// Elementos DOM - Tela Pódio
+const telaPodio = document.getElementById('tela-podio');
+const nomePrimeiro = document.getElementById('nome-primeiro');
+const pontosPrimeiro = document.getElementById('pontos-primeiro');
+const nomeSegundo = document.getElementById('nome-segundo');
+const pontosSegundo = document.getElementById('pontos-segundo');
+const nomeTerceiro = document.getElementById('nome-terceiro');
+const pontosTerceiro = document.getElementById('pontos-terceiro');
+const outrosJogadores = document.getElementById('outros-jogadores');
+const btnNovoJogo = document.getElementById('btn-novo-jogo');
 
 // Funções auxiliares
 function obterPalavraAleatoria() {
@@ -192,9 +209,72 @@ function proximoJogador() {
         // Ainda há jogadores para ver a palavra
         prepararRevelacao();
     } else {
-        // Todos viram, ir para tela de embate
+        // Todos viram, ir para tela de embate/sorteio
         trocarTela(telaRevelacao, telaEmbate);
+        prepararSorteio();
     }
+}
+
+// Preparar tela de sorteio
+function prepararSorteio() {
+    roletaNome.textContent = '?';
+    roletaSeta.textContent = '⟳';
+    btnSortear.disabled = false;
+    btnSortear.classList.remove('escondido');
+    resultadoSorteio.classList.add('escondido');
+    roletaNome.classList.remove('girando');
+    roletaSeta.classList.remove('girando');
+}
+
+// Sortear primeiro jogador e sentido
+function sortearRodada() {
+    btnSortear.disabled = true;
+    
+    // Adicionar animação de girar
+    roletaNome.classList.add('girando');
+    roletaSeta.classList.add('girando');
+    
+    let contador = 0;
+    const totalGiros = 20; // Número de trocas antes de parar
+    const intervalo = 100; // Milissegundos entre cada troca
+    
+    const intervalId = setInterval(() => {
+        // Sortear jogador aleatório para mostrar
+        const jogadorAleatorio = jogadores[Math.floor(Math.random() * jogadores.length)];
+        roletaNome.textContent = jogadorAleatorio;
+        
+        contador++;
+        
+        if (contador >= totalGiros) {
+            clearInterval(intervalId);
+            
+            // Sortear o jogador final
+            const primeiroJogador = jogadores[Math.floor(Math.random() * jogadores.length)];
+            roletaNome.textContent = primeiroJogador;
+            
+            // Sortear sentido (horário ou anti-horário)
+            const sentidos = ['⟳ Horário', '⟲ Anti-horário'];
+            const sentidoSorteado = sentidos[Math.floor(Math.random() * sentidos.length)];
+            
+            // Remover animação
+            roletaNome.classList.remove('girando');
+            roletaSeta.classList.remove('girando');
+            
+            // Mostrar resultado
+            setTimeout(() => {
+                mostrarResultadoSorteio(primeiroJogador, sentidoSorteado);
+            }, 500);
+        }
+    }, intervalo);
+}
+
+// Mostrar resultado do sorteio
+function mostrarResultadoSorteio(jogador, sentido) {
+    primeiroJogadorSpan.textContent = jogador;
+    sentidoRodadaSpan.textContent = sentido;
+    
+    btnSortear.classList.add('escondido');
+    resultadoSorteio.classList.remove('escondido');
 }
 
 // Ir para pontuação (após embate)
@@ -255,6 +335,84 @@ function novaRodada() {
     trocarTela(telaPontuacao, telaConfiguracao);
 }
 
+// Terminar jogo e mostrar pódio
+function terminarJogo() {
+    trocarTela(telaPontuacao, telaPodio);
+    montarPodio();
+}
+
+// Montar pódio com os vencedores
+function montarPodio() {
+    // Ordenar jogadores por pontuação
+    const jogadoresOrdenados = Object.entries(pontuacoes)
+        .filter(([jogador]) => jogadores.includes(jogador))
+        .sort((a, b) => b[1] - a[1]);
+
+    // Preencher top 3
+    if (jogadoresOrdenados.length >= 1) {
+        nomePrimeiro.textContent = jogadoresOrdenados[0][0];
+        pontosPrimeiro.textContent = `${jogadoresOrdenados[0][1]} pts`;
+    } else {
+        nomePrimeiro.textContent = '-';
+        pontosPrimeiro.textContent = '0 pts';
+    }
+
+    if (jogadoresOrdenados.length >= 2) {
+        nomeSegundo.textContent = jogadoresOrdenados[1][0];
+        pontosSegundo.textContent = `${jogadoresOrdenados[1][1]} pts`;
+    } else {
+        nomeSegundo.textContent = '-';
+        pontosSegundo.textContent = '0 pts';
+    }
+
+    if (jogadoresOrdenados.length >= 3) {
+        nomeTerceiro.textContent = jogadoresOrdenados[2][0];
+        pontosTerceiro.textContent = `${jogadoresOrdenados[2][1]} pts`;
+    } else {
+        nomeTerceiro.textContent = '-';
+        pontosTerceiro.textContent = '0 pts';
+    }
+
+    // Preencher outros jogadores (a partir do 4º lugar)
+    outrosJogadores.innerHTML = '';
+    
+    if (jogadoresOrdenados.length > 3) {
+        const tituloOutros = document.createElement('h3');
+        tituloOutros.textContent = '📋 Demais Jogadores';
+        outrosJogadores.appendChild(tituloOutros);
+
+        for (let i = 3; i < jogadoresOrdenados.length; i++) {
+            const [jogador, pontos] = jogadoresOrdenados[i];
+            
+            const divJogador = document.createElement('div');
+            divJogador.className = 'jogador-ranking';
+            
+            divJogador.innerHTML = `
+                <div class="jogador-ranking-info">
+                    <span class="posicao-numero">${i + 1}º</span>
+                    <span class="jogador-ranking-nome">${jogador}</span>
+                </div>
+                <span class="jogador-ranking-pontos">${pontos} pts</span>
+            `;
+            
+            outrosJogadores.appendChild(divJogador);
+        }
+    }
+}
+
+// Novo jogo (limpar tudo e voltar ao início)
+function novoJogo() {
+    jogadores = [];
+    pontuacoes = {};
+    palavraAtual = null;
+    impostorAtual = null;
+    indiceJogadorAtual = 0;
+    
+    atualizarListaJogadores();
+    trocarTela(telaPodio, telaConfiguracao);
+    inputNomeJogador.focus();
+}
+
 // Reiniciar jogo
 function reiniciarJogo() {
     if (confirm('Deseja realmente reiniciar o jogo? Todos os jogadores e pontuações serão perdidos.')) {
@@ -281,11 +439,13 @@ inputNomeJogador.addEventListener('keypress', (e) => {
 btnIniciar.addEventListener('click', iniciarPartida);
 btnRevelar.addEventListener('click', revelarPalavra);
 btnProximo.addEventListener('click', proximoJogador);
+btnSortear.addEventListener('click', sortearRodada);
 btnIrPontuacao.addEventListener('click', irParaPontuacao);
 btnPontuarVerdadeiros.addEventListener('click', pontuarVerdadeiros);
 btnPontuarImpostor.addEventListener('click', pontuarImpostor);
 btnNovaRodada.addEventListener('click', novaRodada);
-btnReiniciar.addEventListener('click', reiniciarJogo);
+btnTerminarJogo.addEventListener('click', terminarJogo);
+btnNovoJogo.addEventListener('click', novoJogo);
 
 // Inicialização
 document.addEventListener('DOMContentLoaded', () => {

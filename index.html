@@ -69,31 +69,39 @@
     <!-- Tela de Embate -->
     <div id="tela-embate" class="tela">
         <div class="container tela-embate">
-            <h1>⚔️ Prepare-se para o Embate!</h1>
-            <p class="subtitulo">Quem vencerá esta rodada?</p>
+            <h1>🎲 Sorteio da Rodada</h1>
+            <p class="subtitulo">Quem começa a falar?</p>
             
-            <div class="embate-container">
-                <!-- Lado Impostor -->
-                <div class="embate-lado embate-impostor">
-                    <img src="Recursos/Impostor.png" alt="Impostor" class="embate-imagem">
-                    <h2 class="embate-titulo">🎭 Impostor</h2>
-                    <p class="embate-texto">Enganar sem ser descoberto</p>
-                </div>
-
-                <!-- VS -->
-                <div class="vs-text">VS</div>
-
-                <!-- Lado Verdadeiros -->
-                <div class="embate-lado embate-verdadeiro">
-                    <img src="Recursos/Verdadeiro.png" alt="Verdadeiros" class="embate-imagem">
-                    <h2 class="embate-titulo">✅ Verdadeiros</h2>
-                    <p class="embate-texto">Descobrir o impostor</p>
+            <div class="roleta-container">
+                <div class="roleta-display">
+                    <div id="roleta-nome" class="roleta-nome">?</div>
+                    <div id="roleta-seta" class="roleta-seta">↻</div>
                 </div>
             </div>
 
-            <button id="btn-ir-pontuacao" class="btn btn-primario btn-grande">
-                Ver Resultado e Pontuar →
+            <button id="btn-sortear" class="btn btn-primario btn-grande">
+                � Sortear Primeiro Jogador
             </button>
+
+            <div id="resultado-sorteio" class="resultado-sorteio escondido">
+                <div class="resultado-card">
+                    <h2>🎯 Resultado do Sorteio</h2>
+                    <div class="resultado-info">
+                        <div class="resultado-item">
+                            <span class="resultado-label">Primeiro a falar:</span>
+                            <span id="primeiro-jogador" class="resultado-valor"></span>
+                        </div>
+                        <div class="resultado-item">
+                            <span class="resultado-label">Sentido:</span>
+                            <span id="sentido-rodada" class="resultado-valor"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="btn-ir-pontuacao" class="btn btn-sucesso btn-grande">
+                    Ir para Pontuação →
+                </button>
+            </div>
         </div>
     </div>
 
@@ -131,8 +139,53 @@
 
             <div class="acoes-finais">
                 <button id="btn-nova-rodada" class="btn btn-primario">🔄 Nova Rodada</button>
-                <button id="btn-reiniciar" class="btn btn-secundario">🗑️ Reiniciar Jogo</button>
+                <button id="btn-terminar-jogo" class="btn btn-destaque">🏆 Terminar Jogo</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Tela de Pódio -->
+    <div id="tela-podio" class="tela">
+        <div class="container">
+            <h1 class="titulo-podio">🏆 Fim de Jogo - Pódio Final 🏆</h1>
+            
+            <div class="podio-container">
+                <!-- Segundo Lugar -->
+                <div class="posicao-podio segundo-lugar">
+                    <div class="trofeu">🥈</div>
+                    <div class="pedestal segundo">
+                        <div class="numero-posicao">2º</div>
+                        <div id="nome-segundo" class="nome-vencedor">-</div>
+                        <div id="pontos-segundo" class="pontos-vencedor">0 pts</div>
+                    </div>
+                </div>
+
+                <!-- Primeiro Lugar -->
+                <div class="posicao-podio primeiro-lugar">
+                    <div class="trofeu">🥇</div>
+                    <div class="pedestal primeiro">
+                        <div class="numero-posicao">1º</div>
+                        <div id="nome-primeiro" class="nome-vencedor">-</div>
+                        <div id="pontos-primeiro" class="pontos-vencedor">0 pts</div>
+                    </div>
+                </div>
+
+                <!-- Terceiro Lugar -->
+                <div class="posicao-podio terceiro-lugar">
+                    <div class="trofeu">🥉</div>
+                    <div class="pedestal terceiro">
+                        <div class="numero-posicao">3º</div>
+                        <div id="nome-terceiro" class="nome-vencedor">-</div>
+                        <div id="pontos-terceiro" class="pontos-vencedor">0 pts</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="outros-jogadores" class="outros-jogadores"></div>
+
+            <button id="btn-novo-jogo" class="btn btn-sucesso btn-grande">
+                🎮 Novo Jogo
+            </button>
         </div>
     </div>
 
