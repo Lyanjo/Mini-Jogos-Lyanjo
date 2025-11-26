@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎭 Jogo do Impostor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Tela de Configuração -->
+    <div id="tela-configuracao" class="tela ativa">
+        <div class="container">
+            <h1>🎭 Jogo do Impostor</h1>
+            <p class="subtitulo">Adicione pelo menos 3 jogadores para começar</p>
+            
+            <div class="form-grupo">
+                <input 
+                    type="text" 
+                    id="input-nome-jogador" 
+                    placeholder="Digite o nome do jogador"
+                    maxlength="20"
+                    autocomplete="off"
+                >
+                <button id="btn-adicionar" class="btn btn-primario">Adicionar</button>
+            </div>
+
+            <div class="lista-jogadores">
+                <h3>Jogadores (<span id="contador-jogadores">0</span>)</h3>
+                <ul id="lista-jogadores"></ul>
+            </div>
+
+            <button id="btn-iniciar" class="btn btn-sucesso" disabled>Iniciar Partida</button>
+            <br><br>
+            <button id="btn-voltar-menu" class="btn btn-secundario" onclick="window.location.href='index.html'">← Voltar ao Menu</button>
+        </div>
+    </div>
+
+    <!-- Tela de Revelação -->
+    <div id="tela-revelacao" class="tela">
+        <div class="container">
+            <h2>Vez de: <span id="nome-jogador-atual" class="jogador-destaque"></span></h2>
+            <p class="instrucoes">👁️ Não deixe os outros verem sua tela!</p>
+            
+            <div class="progresso">
+                <p>Jogador <span id="progresso-atual">0</span> de <span id="progresso-total">0</span></p>
+            </div>
+
+            <button id="btn-revelar" class="btn btn-primario btn-grande">👁️ Ver Minha Palavra</button>
+
+            <!-- Área do Impostor -->
+            <div id="area-impostor" class="revelacao escondido">
+                <div class="card-revelacao impostor">
+                    <img src="Recursos/Impostor.png" alt="Impostor" class="img-impostor">
+                    <h2 class="texto-impostor">🎭 VOCÊ É O IMPOSTOR!</h2>
+                    <p class="desc-impostor">Descubra a palavra sem ser descoberto!</p>
+                </div>
+            </div>
+
+            <!-- Área da Palavra -->
+            <div id="area-palavra" class="revelacao escondido">
+                <div class="card-revelacao palavra">
+                    <p class="label-palavra">Sua palavra é:</p>
+                    <h1 id="palavra-revelada" class="palavra-grande"></h1>
+                </div>
+            </div>
+
+            <button id="btn-proximo" class="btn btn-secundario btn-grande escondido">Próximo Jogador →</button>
+        </div>
+    </div>
+
+    <!-- Tela de Embate -->
+    <div id="tela-embate" class="tela">
+        <div class="container tela-embate">
+            <h1>🎲 Sorteio da Rodada</h1>
+            <p class="subtitulo">Quem começa a falar?</p>
+            
+            <div class="roleta-container">
+                <div class="roleta-display">
+                    <div id="roleta-nome" class="roleta-nome">?</div>
+                    <div id="roleta-seta" class="roleta-seta">↻</div>
+                </div>
+            </div>
+
+            <button id="btn-sortear" class="btn btn-primario btn-grande">
+                🎲 Sortear Primeiro Jogador
+            </button>
+
+            <div id="resultado-sorteio" class="resultado-sorteio escondido">
+                <div class="resultado-card">
+                    <h2>🎯 Resultado do Sorteio</h2>
+                    <div class="resultado-info">
+                        <div class="resultado-item">
+                            <span class="resultado-label">Primeiro a falar:</span>
+                            <span id="primeiro-jogador" class="resultado-valor"></span>
+                        </div>
+                        <div class="resultado-item">
+                            <span class="resultado-label">Sentido:</span>
+                            <span id="sentido-rodada" class="resultado-valor"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="btn-ir-pontuacao" class="btn btn-sucesso btn-grande">
+                    Ir para Pontuação →
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela de Pontuação -->
+    <div id="tela-pontuacao" class="tela">
+        <div class="container">
+            <h2>🏆 Sistema de Pontuação</h2>
+            
+            <div class="info-partida">
+                <p><strong>Impostor:</strong> <span id="nome-impostor"></span> 🎭</p>
+                <p><strong>Palavra:</strong> <span id="palavra-partida"></span></p>
+            </div>
+
+            <div class="opcoes-pontuacao">
+                <button id="btn-pontuar-verdadeiros" class="btn btn-sucesso btn-grande">
+                    ✅ Jogadores Verdadeiros Venceram
+                </button>
+                <button id="btn-pontuar-impostor" class="btn btn-perigo btn-grande">
+                    🎭 Impostor Venceu
+                </button>
+            </div>
+
+            <div class="placar">
+                <h3>📊 Placar Geral</h3>
+                <table id="tabela-placar">
+                    <thead>
+                        <tr>
+                            <th>Jogador</th>
+                            <th>Pontos</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpo-placar"></tbody>
+                </table>
+            </div>
+
+            <div class="acoes-finais">
+                <button id="btn-nova-rodada" class="btn btn-primario">🔄 Nova Rodada</button>
+                <button id="btn-terminar-jogo" class="btn btn-destaque">🏆 Terminar Jogo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tela de Pódio -->
+    <div id="tela-podio" class="tela">
+        <div class="container">
+            <h1 class="titulo-podio">🏆 Fim de Jogo - Pódio Final 🏆</h1>
+            
+            <div class="podio-container">
+                <!-- Segundo Lugar -->
+                <div class="posicao-podio segundo-lugar">
+                    <div class="trofeu">🥈</div>
+                    <div class="pedestal segundo">
+                        <div class="numero-posicao">2º</div>
+                        <div id="nome-segundo" class="nome-vencedor">-</div>
+                        <div id="pontos-segundo" class="pontos-vencedor">0 pts</div>
+                    </div>
+                </div>
+
+                <!-- Primeiro Lugar -->
+                <div class="posicao-podio primeiro-lugar">
+                    <div class="trofeu">🥇</div>
+                    <div class="pedestal primeiro">
+                        <div class="numero-posicao">1º</div>
+                        <div id="nome-primeiro" class="nome-vencedor">-</div>
+                        <div id="pontos-primeiro" class="pontos-vencedor">0 pts</div>
+                    </div>
+                </div>
+
+                <!-- Terceiro Lugar -->
+                <div class="posicao-podio terceiro-lugar">
+                    <div class="trofeu">🥉</div>
+                    <div class="pedestal terceiro">
+                        <div class="numero-posicao">3º</div>
+                        <div id="nome-terceiro" class="nome-vencedor">-</div>
+                        <div id="pontos-terceiro" class="pontos-vencedor">0 pts</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="outros-jogadores" class="outros-jogadores"></div>
+
+            <button id="btn-novo-jogo" class="btn btn-sucesso btn-grande">
+                🎮 Novo Jogo
+            </button>
+            <button id="btn-voltar-menu-final" class="btn btn-secundario" onclick="window.location.href='index.html'">← Voltar ao Menu</button>
+        </div>
+    </div>
+
+    <script src="impostor.js"></script>
+</body>
+</html>

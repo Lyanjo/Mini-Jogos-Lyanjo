@@ -3,192 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎭 Jogo do Impostor</title>
+    <title>🎮 Central de Mini Jogos</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .hub-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .hub-titulo {
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse 2s infinite;
+        }
+
+        .hub-subtitulo {
+            font-size: 1.3rem;
+            color: var(--cor-texto-claro);
+            text-align: center;
+            margin-bottom: 60px;
+            opacity: 0.8;
+        }
+
+        .jogos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        .card-jogo {
+            background: linear-gradient(135deg, var(--cor-fundo-claro), var(--cor-fundo));
+            border: 3px solid var(--cor-primaria);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-jogo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .card-jogo:hover::before {
+            left: 100%;
+        }
+
+        .card-jogo:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(99, 102, 241, 0.4);
+            border-color: var(--cor-secundaria);
+        }
+
+        .card-jogo-icone {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            display: block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .card-jogo:nth-child(2) .card-jogo-icone {
+            animation-delay: 0.5s;
+        }
+
+        .card-jogo:nth-child(3) .card-jogo-icone {
+            animation-delay: 1s;
+        }
+
+        .card-jogo-titulo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--cor-primaria);
+            margin-bottom: 15px;
+        }
+
+        .card-jogo-descricao {
+            font-size: 1.1rem;
+            color: var(--cor-texto-claro);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .card-jogo-badge {
+            display: inline-block;
+            background: var(--cor-primaria);
+            color: var(--cor-fundo);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .card-jogo.disponivel .card-jogo-badge {
+            background: var(--cor-sucesso);
+        }
+
+        .card-jogo.em-breve {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .card-jogo.em-breve:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .card-jogo.em-breve .card-jogo-badge {
+            background: var(--cor-texto-claro);
+        }
+
+        .hub-footer {
+            margin-top: 60px;
+            text-align: center;
+            color: var(--cor-texto-claro);
+            opacity: 0.6;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hub-titulo {
+                font-size: 2.5rem;
+            }
+
+            .jogos-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .card-jogo-icone {
+                font-size: 4rem;
+            }
+
+            .card-jogo-titulo {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Tela de Configuração -->
-    <div id="tela-configuracao" class="tela ativa">
-        <div class="container">
-            <h1>🎭 Jogo do Impostor</h1>
-            <p class="subtitulo">Adicione pelo menos 3 jogadores para começar</p>
-            
-            <div class="form-grupo">
-                <input 
-                    type="text" 
-                    id="input-nome-jogador" 
-                    placeholder="Digite o nome do jogador"
-                    maxlength="20"
-                    autocomplete="off"
-                >
-                <button id="btn-adicionar" class="btn btn-primario">Adicionar</button>
+    <div class="hub-container">
+        <h1 class="hub-titulo">🎮 Central de Mini Jogos</h1>
+        <p class="hub-subtitulo">Escolha um jogo e divirta-se com seus amigos!</p>
+
+        <div class="jogos-grid">
+            <!-- Jogo do Impostor -->
+            <div class="card-jogo disponivel" onclick="window.location.href='impostor.html'">
+                <span class="card-jogo-icone">🎭</span>
+                <h2 class="card-jogo-titulo">Jogo do Impostor</h2>
+                <p class="card-jogo-descricao">
+                    Um jogador é o impostor e não sabe a palavra secreta. Descubra quem é antes que seja tarde!
+                </p>
+                <span class="card-jogo-badge disponivel">✓ Disponível</span>
             </div>
 
-            <div class="lista-jogadores">
-                <h3>Jogadores (<span id="contador-jogadores">0</span>)</h3>
-                <ul id="lista-jogadores"></ul>
+            <!-- Mega Senha -->
+            <div class="card-jogo disponivel" onclick="window.location.href='megasenha.html'">
+                <span class="card-jogo-icone">🎯</span>
+                <h2 class="card-jogo-titulo">Mega Senha</h2>
+                <p class="card-jogo-descricao">
+                    Jogo de duplas! Revele dicas e tente adivinhar as palavras secretas para ganhar pontos.
+                </p>
+                <span class="card-jogo-badge disponivel">✓ Disponível</span>
             </div>
 
-            <button id="btn-iniciar" class="btn btn-sucesso" disabled>Iniciar Partida</button>
-        </div>
-    </div>
-
-    <!-- Tela de Revelação -->
-    <div id="tela-revelacao" class="tela">
-        <div class="container">
-            <h2>Vez de: <span id="nome-jogador-atual" class="jogador-destaque"></span></h2>
-            <p class="instrucoes">👁️ Não deixe os outros verem sua tela!</p>
-            
-            <div class="progresso">
-                <p>Jogador <span id="progresso-atual">0</span> de <span id="progresso-total">0</span></p>
-            </div>
-
-            <button id="btn-revelar" class="btn btn-primario btn-grande">👁️ Ver Minha Palavra</button>
-
-            <!-- Área do Impostor -->
-            <div id="area-impostor" class="revelacao escondido">
-                <div class="card-revelacao impostor">
-                    <img src="Recursos/Impostor.png" alt="Impostor" class="img-impostor">
-                    <h2 class="texto-impostor">🎭 VOCÊ É O IMPOSTOR!</h2>
-                    <p class="desc-impostor">Descubra a palavra sem ser descoberto!</p>
-                </div>
-            </div>
-
-            <!-- Área da Palavra -->
-            <div id="area-palavra" class="revelacao escondido">
-                <div class="card-revelacao palavra">
-                    <p class="label-palavra">Sua palavra é:</p>
-                    <h1 id="palavra-revelada" class="palavra-grande"></h1>
-                </div>
-            </div>
-
-            <button id="btn-proximo" class="btn btn-secundario btn-grande escondido">Próximo Jogador →</button>
-        </div>
-    </div>
-
-    <!-- Tela de Embate -->
-    <div id="tela-embate" class="tela">
-        <div class="container tela-embate">
-            <h1>🎲 Sorteio da Rodada</h1>
-            <p class="subtitulo">Quem começa a falar?</p>
-            
-            <div class="roleta-container">
-                <div class="roleta-display">
-                    <div id="roleta-nome" class="roleta-nome">?</div>
-                    <div id="roleta-seta" class="roleta-seta">↻</div>
-                </div>
-            </div>
-
-            <button id="btn-sortear" class="btn btn-primario btn-grande">
-                � Sortear Primeiro Jogador
-            </button>
-
-            <div id="resultado-sorteio" class="resultado-sorteio escondido">
-                <div class="resultado-card">
-                    <h2>🎯 Resultado do Sorteio</h2>
-                    <div class="resultado-info">
-                        <div class="resultado-item">
-                            <span class="resultado-label">Primeiro a falar:</span>
-                            <span id="primeiro-jogador" class="resultado-valor"></span>
-                        </div>
-                        <div class="resultado-item">
-                            <span class="resultado-label">Sentido:</span>
-                            <span id="sentido-rodada" class="resultado-valor"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <button id="btn-ir-pontuacao" class="btn btn-sucesso btn-grande">
-                    Ir para Pontuação →
-                </button>
+            <div class="card-jogo em-breve">
+                <span class="card-jogo-icone">🃏</span>
+                <h2 class="card-jogo-titulo">Jogo 3</h2>
+                <p class="card-jogo-descricao">
+                    Novo jogo em desenvolvimento. Fique ligado para mais diversão!
+                </p>
+                <span class="card-jogo-badge">Em Breve</span>
             </div>
         </div>
-    </div>
 
-    <!-- Tela de Pontuação -->
-    <div id="tela-pontuacao" class="tela">
-        <div class="container">
-            <h2>🏆 Sistema de Pontuação</h2>
-            
-            <div class="info-partida">
-                <p><strong>Impostor:</strong> <span id="nome-impostor"></span> 🎭</p>
-                <p><strong>Palavra:</strong> <span id="palavra-partida"></span></p>
-            </div>
-
-            <div class="opcoes-pontuacao">
-                <button id="btn-pontuar-verdadeiros" class="btn btn-sucesso btn-grande">
-                    ✅ Jogadores Verdadeiros Venceram
-                </button>
-                <button id="btn-pontuar-impostor" class="btn btn-perigo btn-grande">
-                    🎭 Impostor Venceu
-                </button>
-            </div>
-
-            <div class="placar">
-                <h3>📊 Placar Geral</h3>
-                <table id="tabela-placar">
-                    <thead>
-                        <tr>
-                            <th>Jogador</th>
-                            <th>Pontos</th>
-                        </tr>
-                    </thead>
-                    <tbody id="corpo-placar"></tbody>
-                </table>
-            </div>
-
-            <div class="acoes-finais">
-                <button id="btn-nova-rodada" class="btn btn-primario">🔄 Nova Rodada</button>
-                <button id="btn-terminar-jogo" class="btn btn-destaque">🏆 Terminar Jogo</button>
-            </div>
+        <div class="hub-footer">
+            <p>Desenvolvido com ❤️ | Mais jogos em breve!</p>
         </div>
     </div>
-
-    <!-- Tela de Pódio -->
-    <div id="tela-podio" class="tela">
-        <div class="container">
-            <h1 class="titulo-podio">🏆 Fim de Jogo - Pódio Final 🏆</h1>
-            
-            <div class="podio-container">
-                <!-- Segundo Lugar -->
-                <div class="posicao-podio segundo-lugar">
-                    <div class="trofeu">🥈</div>
-                    <div class="pedestal segundo">
-                        <div class="numero-posicao">2º</div>
-                        <div id="nome-segundo" class="nome-vencedor">-</div>
-                        <div id="pontos-segundo" class="pontos-vencedor">0 pts</div>
-                    </div>
-                </div>
-
-                <!-- Primeiro Lugar -->
-                <div class="posicao-podio primeiro-lugar">
-                    <div class="trofeu">🥇</div>
-                    <div class="pedestal primeiro">
-                        <div class="numero-posicao">1º</div>
-                        <div id="nome-primeiro" class="nome-vencedor">-</div>
-                        <div id="pontos-primeiro" class="pontos-vencedor">0 pts</div>
-                    </div>
-                </div>
-
-                <!-- Terceiro Lugar -->
-                <div class="posicao-podio terceiro-lugar">
-                    <div class="trofeu">🥉</div>
-                    <div class="pedestal terceiro">
-                        <div class="numero-posicao">3º</div>
-                        <div id="nome-terceiro" class="nome-vencedor">-</div>
-                        <div id="pontos-terceiro" class="pontos-vencedor">0 pts</div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="outros-jogadores" class="outros-jogadores"></div>
-
-            <button id="btn-novo-jogo" class="btn btn-sucesso btn-grande">
-                🎮 Novo Jogo
-            </button>
-        </div>
-    </div>
-
-    <script src="game.js"></script>
 </body>
 </html>

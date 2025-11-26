@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mega Senha - Mini Jogos Lyanjo</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .game-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .setup-screen, .game-screen {
+            background: #2c3e50;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            color: #ecf0f1;
+        }
+
+        .team-setup {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .team-card {
+            padding: 20px;
+            border-radius: 10px;
+            border: 3px solid;
+            background: #34495e;
+        }
+
+        .team-card.team-a {
+            border-color: #3498db;
+        }
+
+        .team-card.team-b {
+            border-color: #e74c3c;
+        }
+
+        .team-card h3 {
+            margin-top: 0;
+            font-size: 24px;
+            color: #ecf0f1;
+        }
+
+        .input-group {
+            margin: 15px 0;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #ecf0f1;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #7f8c8d;
+            border-radius: 5px;
+            font-size: 16px;
+            background: #1a252f;
+            color: #ecf0f1;
+        }
+
+        .input-group input::placeholder {
+            color: #95a5a6;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #ddd;
+        }
+
+        .score-board {
+            display: flex;
+            gap: 30px;
+        }
+
+        .team-score {
+            text-align: center;
+            padding: 15px 25px;
+            border-radius: 10px;
+            min-width: 120px;
+        }
+
+        .team-score.team-a {
+            background: #3498db;
+            color: white;
+        }
+
+        .team-score.team-b {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .team-score .team-name {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .team-score .score {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .round-info {
+            text-align: center;
+        }
+
+        .round-info h2 {
+            margin: 0;
+            font-size: 24px;
+            color: #ecf0f1;
+        }
+
+        .timer-display {
+            font-size: 48px;
+            font-weight: bold;
+            color: #3498db;
+            margin-top: 10px;
+        }
+
+        .timer-display.warning {
+            color: #e74c3c;
+            animation: pulse-timer 1s infinite;
+        }
+
+        @keyframes pulse-timer {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .current-turn {
+            font-size: 18px;
+            color: #95a5a6;
+            margin-top: 5px;
+        }
+
+        .turn-announcement {
+            text-align: center;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            color: white;
+            margin: 30px 0;
+        }
+
+        .turn-announcement h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .turn-announcement p {
+            font-size: 24px;
+            opacity: 0.9;
+        }
+
+        .btn-warning {
+            background: #f39c12;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #e67e22;
+        }
+
+        .word-display {
+            text-align: center;
+            margin: 30px 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            color: white;
+        }
+
+        .word-label {
+            font-size: 18px;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .secret-word {
+            font-size: 64px;
+            font-weight: bold;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .clues-section {
+            margin: 30px 0;
+        }
+
+        .clues-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .clue-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #95a5a6;
+            font-size: 16px;
+            color: #2c3e50;
+        }
+
+        .guess-section {
+            margin: 30px 0;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .guess-section h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+
+        .guess-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .guess-input input {
+            flex: 1;
+            padding: 12px;
+            font-size: 18px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .clues-section {
+            margin: 30px 0;
+        }
+
+        .clues-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .clue-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #95a5a6;
+            font-size: 16px;
+            color: #2c3e50;
+        }
+
+        .guess-section {
+            margin: 30px 0;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .guess-section h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+
+        .guess-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .guess-input input {
+            flex: 1;
+            padding: 12px;
+            font-size: 18px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #229954;
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .feedback {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+
+        .game-over {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .game-over h2 {
+            font-size: 36px;
+            color: #27ae60;
+            margin-bottom: 20px;
+        }
+
+        .final-scores {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .winner-banner {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <!-- Tela de Configuração -->
+        <div id="setupScreen" class="setup-screen">
+            <h1>🎯 Mega Senha</h1>
+            <p style="text-align: center; font-size: 18px; color: #95a5a6;">
+                Jogo de duplas! Dê dicas e tente adivinhar as palavras secretas.
+            </p>
+            
+            <div class="team-setup">
+                <div class="team-card team-a">
+                    <h3>👥 Time A</h3>
+                    <div class="input-group">
+                        <label for="teamAPlayer1">Jogador 1:</label>
+                        <input type="text" id="teamAPlayer1" placeholder="Nome do jogador 1">
+                    </div>
+                    <div class="input-group">
+                        <label for="teamAPlayer2">Jogador 2:</label>
+                        <input type="text" id="teamAPlayer2" placeholder="Nome do jogador 2">
+                    </div>
+                </div>
+
+                <div class="team-card team-b">
+                    <h3>👥 Time B</h3>
+                    <div class="input-group">
+                        <label for="teamBPlayer1">Jogador 1:</label>
+                        <input type="text" id="teamBPlayer1" placeholder="Nome do jogador 1">
+                    </div>
+                    <div class="input-group">
+                        <label for="teamBPlayer2">Jogador 2:</label>
+                        <input type="text" id="teamBPlayer2" placeholder="Nome do jogador 2">
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-primary" onclick="startGame()">Iniciar Jogo</button>
+                <button class="btn btn-secondary" onclick="window.location.href='index.html'">Voltar</button>
+            </div>
+        </div>
+
+        <!-- Tela de Anúncio de Turno -->
+        <div id="turnScreen" class="setup-screen hidden">
+            <div class="turn-announcement">
+                <h2>🎯 Turno de:</h2>
+                <p id="turnPlayers"></p>
+            </div>
+            <p style="text-align: center; font-size: 18px; margin: 30px 0;">
+                Um jogador deve ficar de <strong>costas para a tela</strong>.<br>
+                O parceiro dará dicas para ele adivinhar a palavra!
+            </p>
+            <div class="actions">
+                <button class="btn btn-success" onclick="startTurn()">Iniciar Turno (2 min)</button>
+            </div>
+        </div>
+
+        <!-- Tela do Jogo -->
+        <div id="gameScreen" class="game-screen hidden">
+            <div class="game-header">
+                <div class="score-board">
+                    <div class="team-score team-a">
+                        <div class="team-name">Time A</div>
+                        <div class="score" id="scoreA">0</div>
+                    </div>
+                    <div class="team-score team-b">
+                        <div class="team-name">Time B</div>
+                        <div class="score" id="scoreB">0</div>
+                    </div>
+                </div>
+                <div class="round-info">
+                    <h2>Timer</h2>
+                    <div class="timer-display" id="timerDisplay">2:00</div>
+                </div>
+            </div>
+
+            <div class="word-display">
+                <div class="word-label">🔤 Palavra Secreta:</div>
+                <div class="secret-word" id="secretWord">PALAVRA</div>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-success" onclick="wordCorrect()">✓ Acertou</button>
+                <button class="btn btn-warning" onclick="wordPass()">→ Passar</button>
+                <button class="btn btn-danger" onclick="wordInvalid()">✗ Inválido</button>
+            </div>
+        </div>
+
+        <!-- Tela de Verificação de Rodada -->
+        <div id="checkRoundScreen" class="setup-screen hidden">
+            <div class="turn-announcement">
+                <h2>📊 Rodada Completa!</h2>
+                <p>Ambos os times já jogaram.</p>
+            </div>
+            
+            <div class="final-scores">
+                <div class="team-score team-a">
+                    <div class="team-name">Time A</div>
+                    <div class="score" id="checkScoreA">0</div>
+                </div>
+                <div class="team-score team-b">
+                    <div class="team-name">Time B</div>
+                    <div class="score" id="checkScoreB">0</div>
+                </div>
+            </div>
+
+            <p style="text-align: center; font-size: 20px; margin: 30px 0;">
+                Deseja continuar jogando?
+            </p>
+
+            <div class="actions">
+                <button class="btn btn-success" onclick="continueGame()">Continuar</button>
+                <button class="btn btn-danger" onclick="endGame()">Encerrar Jogo</button>
+            </div>
+        </div>
+
+        <!-- Tela de Fim de Jogo -->
+        <div id="gameOverScreen" class="game-screen hidden">
+            <div class="game-over">
+                <div id="winnerBanner" class="winner-banner"></div>
+                <h2>🎊 Jogo Finalizado!</h2>
+                
+                <div class="final-scores">
+                    <div class="team-score team-a">
+                        <div class="team-name">Time A</div>
+                        <div class="score" id="finalScoreA">0</div>
+                    </div>
+                    <div class="team-score team-b">
+                        <div class="team-name">Time B</div>
+                        <div class="score" id="finalScoreB">0</div>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button class="btn btn-primary" onclick="location.reload()">Jogar Novamente</button>
+                    <button class="btn btn-secondary" onclick="window.location.href='index.html'">Menu Principal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="megasenha.js"></script>
+</body>
+</html>
