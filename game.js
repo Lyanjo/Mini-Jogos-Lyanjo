@@ -1,20 +1,66 @@
 // Lista de palavras do jogo
 const PALAVRAS = [
-    "BANANA", "CACHORRO", "FUTEBOL", "PIZZA", "PRAIA",
-    "MONTANHA", "COMPUTADOR", "VIOLÃO", "LIVRO", "CINEMA",
-    "CAFÉ", "CHOCOLATE", "NUVEM", "ESTRELA", "CARRO",
-    "BICICLETA", "TELEFONE", "ESCOLA", "HOSPITAL", "FLORESTA",
-    "OCEANO", "DESERTO", "VULCÃO", "GELEIRA", "CAVERNA",
+    // Frutas
+    "BANANA", "MAÇÃ", "LARANJA", "UVA", "MELANCIA",
+    "MORANGO", "ABACAXI", "MANGA", "PÊRA", "LIMÃO",
+    "MAMÃO", "KIWI", "MELÃO", "AMORA", "FRAMBOESA",
+    
+    // Animais
+    "CACHORRO", "GATO", "ELEFANTE", "LEÃO", "TIGRE",
+    "URSO", "COELHO", "RAPOSA", "LOBO", "GIRAFA",
+    "ZEBRA", "MACACO", "PANDA", "PINGUIM", "GOLFINHO",
+    
+    // Esportes e Lazer
+    "FUTEBOL", "BASQUETE", "VÔLEI", "TÊNIS", "NATAÇÃO",
+    "CORRIDA", "CICLISMO", "SKATE", "SURF", "YOGA",
+    
+    // Comidas
+    "PIZZA", "HAMBÚRGUER", "SUSHI", "TACOS", "LASANHA",
+    "MACARRÃO", "ARROZ", "FEIJÃO", "SALADA", "SOPA",
+    "SANDUÍCHE", "PASTEL", "COXINHA", "BRIGADEIRO", "PUDIM",
+    
+    // Lugares
+    "PRAIA", "MONTANHA", "FLORESTA", "DESERTO", "OCEANO",
+    "VULCÃO", "GELEIRA", "CAVERNA", "ILHA", "LAGO",
+    "CACHOEIRA", "CAMPO", "CIDADE", "VILA", "ALDEIA",
+    
+    // Construções
     "CASTELO", "PONTE", "TÚNEL", "FAROL", "MOINHO",
-    "JARDIM", "PARQUE", "SHOPPING", "AEROPORTO", "ESTAÇÃO",
-    "MUSEU", "TEATRO", "CIRCO", "ZOOLÓGICO", "AQUÁRIO",
-    "BIBLIOTECA", "RESTAURANTE", "PADARIA", "FARMÁCIA", "BANCO",
-    "AÇÚCAR", "SAL", "PIMENTA", "ALHO", "CEBOLA",
-    "TOMATE", "ALFACE", "CENOURA", "BATATA", "ARROZ",
-    "FEIJÃO", "MACARRÃO", "QUEIJO", "LEITE", "OVO",
-    "PEIXE", "FRANGO", "CARNE", "SUCO", "REFRIGERANTE",
-    "ÁGUA", "CHÁ", "SORVETE", "BOLO", "BISCOITO",
-    "PÃO", "MANTEIGA", "GELEIA", "MEL", "IOGURTE"
+    "TORRE", "PIRÂMIDE", "TEMPLO", "IGLU", "CABANA",
+    
+    // Estabelecimentos
+    "ESCOLA", "HOSPITAL", "BIBLIOTECA", "MUSEU", "TEATRO",
+    "CINEMA", "CIRCO", "ZOOLÓGICO", "AQUÁRIO", "PARQUE",
+    "SHOPPING", "AEROPORTO", "ESTAÇÃO", "RESTAURANTE", "PADARIA",
+    "FARMÁCIA", "BANCO", "HOTEL", "MERCADO", "ACADEMIA",
+    
+    // Tecnologia
+    "COMPUTADOR", "TELEFONE", "TABLET", "MOUSE", "TECLADO",
+    "MONITOR", "CÂMERA", "DRONE", "ROBÔ", "SATÉLITE",
+    
+    // Música
+    "VIOLÃO", "PIANO", "BATERIA", "FLAUTA", "SAXOFONE",
+    "TROMPETE", "HARPA", "VIOLINO", "GUITARRA", "BAIXO",
+    
+    // Natureza
+    "NUVEM", "ESTRELA", "SOL", "LUA", "ARCO-ÍRIS",
+    "TROVÃO", "RELÂMPAGO", "NEVE", "CHUVA", "VENTO",
+    
+    // Veículos
+    "CARRO", "BICICLETA", "MOTO", "ÔNIBUS", "TREM",
+    "AVIÃO", "HELICÓPTERO", "NAVIO", "BARCO", "SUBMARINO",
+    
+    // Objetos do Dia a Dia
+    "LIVRO", "CADERNO", "CANETA", "LÁPIS", "MOCHILA",
+    "RELÓGIO", "ÓCULOS", "CHAVE", "CARTEIRA", "GUARDA-CHUVA",
+    
+    // Bebidas
+    "CAFÉ", "CHÁ", "SUCO", "REFRIGERANTE", "ÁGUA",
+    "LEITE", "VITAMINA", "SMOOTHIE", "LIMONADA", "CHOCOLATE QUENTE",
+    
+    // Doces
+    "CHOCOLATE", "SORVETE", "BOLO", "BISCOITO", "CUPCAKE",
+    "TORTA", "BROWNIE", "COOKIE", "BOMBOM", "PIRULITO"
 ];
 
 // Estado do jogo
