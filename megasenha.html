@@ -15,9 +15,18 @@
         .setup-screen, .game-screen {
             background: #2c3e50;
             border-radius: 15px;
-            padding: 30px;
+            padding: 40px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.3);
             color: #ecf0f1;
+        }
+
+        .setup-screen h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .setup-screen p {
+            font-size: 22px;
         }
 
         .team-setup {
@@ -28,24 +37,26 @@
         }
 
         .team-card {
-            padding: 20px;
+            padding: 25px;
             border-radius: 10px;
             border: 3px solid;
-            background: #34495e;
         }
 
         .team-card.team-a {
-            border-color: #3498db;
+            border-color: #2980b9;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
         }
 
         .team-card.team-b {
-            border-color: #e74c3c;
+            border-color: #c0392b;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
         }
 
         .team-card h3 {
             margin-top: 0;
-            font-size: 24px;
-            color: #ecf0f1;
+            font-size: 30px;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .input-group {
@@ -56,21 +67,22 @@
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
-            color: #ecf0f1;
+            color: #ffffff;
+            font-size: 18px;
         }
 
         .input-group input {
             width: 100%;
-            padding: 10px;
-            border: 2px solid #7f8c8d;
+            padding: 14px;
+            border: 2px solid rgba(255,255,255,0.3);
             border-radius: 5px;
-            font-size: 16px;
-            background: #1a252f;
-            color: #ecf0f1;
+            font-size: 20px;
+            background: rgba(0,0,0,0.2);
+            color: #ffffff;
         }
 
         .input-group input::placeholder {
-            color: #95a5a6;
+            color: rgba(255,255,255,0.6);
         }
 
         .game-header {
@@ -89,9 +101,9 @@
 
         .team-score {
             text-align: center;
-            padding: 15px 25px;
+            padding: 20px 30px;
             border-radius: 10px;
-            min-width: 120px;
+            min-width: 150px;
         }
 
         .team-score.team-a {
@@ -105,12 +117,12 @@
         }
 
         .team-score .team-name {
-            font-size: 14px;
+            font-size: 18px;
             margin-bottom: 5px;
         }
 
         .team-score .score {
-            font-size: 32px;
+            font-size: 40px;
             font-weight: bold;
         }
 
@@ -120,12 +132,12 @@
 
         .round-info h2 {
             margin: 0;
-            font-size: 24px;
+            font-size: 30px;
             color: #ecf0f1;
         }
 
         .timer-display {
-            font-size: 48px;
+            font-size: 60px;
             font-weight: bold;
             color: #3498db;
             margin-top: 10px;
@@ -149,7 +161,7 @@
 
         .turn-announcement {
             text-align: center;
-            padding: 60px 40px;
+            padding: 75px 50px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-radius: 15px;
             color: white;
@@ -157,12 +169,12 @@
         }
 
         .turn-announcement h2 {
-            font-size: 36px;
+            font-size: 45px;
             margin-bottom: 20px;
         }
 
         .turn-announcement p {
-            font-size: 24px;
+            font-size: 30px;
             opacity: 0.9;
         }
 
@@ -178,20 +190,20 @@
         .word-display {
             text-align: center;
             margin: 30px 0;
-            padding: 40px;
+            padding: 50px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-radius: 15px;
             color: white;
         }
 
         .word-label {
-            font-size: 18px;
+            font-size: 22px;
             margin-bottom: 15px;
             opacity: 0.9;
         }
 
         .secret-word {
-            font-size: 64px;
+            font-size: 80px;
             font-weight: bold;
             letter-spacing: 5px;
             text-transform: uppercase;
@@ -291,8 +303,8 @@
         }
 
         .btn {
-            padding: 12px 30px;
-            font-size: 16px;
+            padding: 16px 40px;
+            font-size: 20px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
@@ -371,11 +383,11 @@
 
         .game-over {
             text-align: center;
-            padding: 40px;
+            padding: 50px;
         }
 
         .game-over h2 {
-            font-size: 36px;
+            font-size: 45px;
             color: #27ae60;
             margin-bottom: 20px;
         }
@@ -383,17 +395,17 @@
         .final-scores {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin: 30px 0;
+            gap: 40px;
+            margin: 40px 0;
         }
 
         .winner-banner {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
-            padding: 20px;
+            padding: 25px;
             border-radius: 10px;
             margin-bottom: 30px;
-            font-size: 24px;
+            font-size: 30px;
         }
     </style>
 </head>
@@ -444,7 +456,7 @@
                 <h2>🎯 Turno de:</h2>
                 <p id="turnPlayers"></p>
             </div>
-            <p style="text-align: center; font-size: 18px; margin: 30px 0;">
+            <p style="text-align: center; font-size: 22px; margin: 30px 0;">
                 Um jogador deve ficar de <strong>costas para a tela</strong>.<br>
                 O parceiro dará dicas para ele adivinhar a palavra!
             </p>
@@ -502,7 +514,7 @@
                 </div>
             </div>
 
-            <p style="text-align: center; font-size: 20px; margin: 30px 0;">
+            <p style="text-align: center; font-size: 25px; margin: 30px 0;">
                 Deseja continuar jogando?
             </p>
 
